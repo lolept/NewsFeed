@@ -15,14 +15,12 @@
     </TextView>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
         android:id="@+id/image"
-        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_launcher_foreground"
-        >
-    </ImageView>
+        android:scaleType="matrix"
+        android:src="@drawable/ic_launcher_foreground"></ImageView>
 
     <TextView
         android:layout_width="match_parent"
@@ -62,6 +60,8 @@
         android:text="close">
 
     </Button>
+
+
 
 
 </LinearLayout>

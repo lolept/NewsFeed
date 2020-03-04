@@ -23,14 +23,13 @@
         </TextView>
 
         <ImageView
+            android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            android:id="@+id/image"
-            android:scaleType="centerCrop"
+            android:layout_below="@+id/title"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_launcher_foreground"
-            android:layout_below="@+id/title">
-        </ImageView>
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_foreground"></ImageView>
 
         <TextView
             android:layout_width="match_parent"
