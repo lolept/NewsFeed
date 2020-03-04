@@ -1,6 +1,8 @@
 package com.example.gson;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     Context context;
     ArrayList<Post> profiles;
+    String image_link, full_text;
 
     public MyAdapter(Context c , ArrayList<Post> p)
     {
@@ -38,6 +41,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.title.setText(profiles.get(position).getTitle());
+
+        image_link = profiles.get(position).getImage();
+        full_text = profiles.get(position).getText();
         String t = "";
         try{
             t = (profiles.get(position).getText()).substring(0,50);
@@ -49,7 +55,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.author.setText(profiles.get(position).getAuthor());
         holder.comments.setText(profiles.get(position).getComments());
         Picasso.get().load(profiles.get(position).getImage()).into(holder.image);
-
+        holder.click(position);
     }
 
     @Override
@@ -73,16 +79,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             author = (TextView) itemView.findViewById(R.id.author);
             comments = (TextView) itemView.findViewById(R.id.comments);
 
-            v.setOnClickListener(new View.OnClickListener() {
+        }
+        public void click(int position){
+            final int pos = position;
+            image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent(context, PostPage.class);
-                    //intent.putExtra("url",results.get(position).getUrl().toString());
+                    Intent intent = new Intent(context, PostPage.class);
+
+                    intent.putExtra("title", profiles.get(pos).getTitle());
+                    intent.putExtra("text", profiles.get(pos).getText());
+                    intent.putExtra("likes", profiles.get(pos).getRating());
+                    intent.putExtra("author", profiles.get(pos).getAuthor());
+                    intent.putExtra("comments", profiles.get(pos).getComments());
+                    intent.putExtra("image link", profiles.get(pos).getImage());
+
                     context.startActivity(intent);
                 }
             });
+
         }
-
-
     }
 }
