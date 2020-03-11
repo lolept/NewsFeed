@@ -16,8 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                     Post p = dataSnapshot1.getValue(Post.class);
                     list.add(p);
                 }
-                Collections.reverse(list);
                 adapter = new MyAdapter(MainActivity.this,list);
                 recyclerView.setAdapter(adapter);
             }
