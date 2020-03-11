@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 public class PostPage extends AppCompatActivity implements View.OnTouchListener {
     TextView title,text, likes, author, comments;
+    EditText com;
     ImageView image;
 
     private static final String TAG = "Touch" ;
@@ -36,6 +40,7 @@ public class PostPage extends AppCompatActivity implements View.OnTouchListener 
     public static int mode = NONE;
 
     float oldDist;
+    public float finalScale = 1f;
 
     private float[] matrixValues = new float[9];
 
@@ -57,6 +62,7 @@ public class PostPage extends AppCompatActivity implements View.OnTouchListener 
         author = (TextView) findViewById(R.id.author);
         comments = (TextView) findViewById(R.id.comments);
         image = (ImageView) findViewById(R.id.image);
+        com = (EditText) findViewById(R.id.com);
         Button close = (Button) findViewById(R.id.close);
 
         title.setText(text_title);
@@ -65,6 +71,7 @@ public class PostPage extends AppCompatActivity implements View.OnTouchListener 
         likes.setText(text_likes + "");
         author.setText(text_author);
         comments.setText(text_comments);
+
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,10 +122,12 @@ public class PostPage extends AppCompatActivity implements View.OnTouchListener 
                     float newDist = spacing(event);
                     Log.d(TAG, "newDist=" + newDist);
                     if (newDist > 10f) {
-
-                        matrix.set(savedMatrix);
-                        float scale = newDist / oldDist;
-                        matrix.postScale(scale, scale, mid.x, mid.y);
+                        if(finalScale < 2f && finalScale > 0.5f) {
+                            matrix.set(savedMatrix);
+                            float scale = newDist / oldDist;
+                            finalScale *= scale;
+                            matrix.postScale(scale, scale, mid.x, mid.y);
+                        }
                     }
                 }
                 break;
@@ -148,5 +157,21 @@ public class PostPage extends AppCompatActivity implements View.OnTouchListener 
         float x = event.getX(0) + event.getX(1);
         float y = event.getY(0) + event.getY(1);
         point.set(x / 2, y / 2);
+        com.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 }
